@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2019_11_25_225856) do
     t.string "simple_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["simple_name"], name: "index_stations_on_simple_name"
+    t.index ["simple_name"], name: "index_stations_on_simple_name", unique: true
   end
 
 end

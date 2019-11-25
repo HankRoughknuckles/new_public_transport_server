@@ -4,6 +4,9 @@ class Station < ApplicationRecord
 
   before_save :convert_name_to_simple_name
 
+  validates :name, uniqueness: :true
+  validates :simple_name, uniqueness: :true
+
   def convert_name_to_simple_name
     self.simple_name = I18n.transliterate(self.name)
   end
