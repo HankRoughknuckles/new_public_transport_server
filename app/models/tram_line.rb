@@ -1,0 +1,2 @@
+class TramLine < ApplicationRecord
+end
