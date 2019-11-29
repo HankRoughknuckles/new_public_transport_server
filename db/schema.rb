@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_225856) do
+ActiveRecord::Schema.define(version: 2019_11_29_153135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "segment_tram_lines", force: :cascade do |t|
+    t.bigint "segment_id", null: false
+    t.bigint "tram_line_id", null: false
+    t.integer "order"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["segment_id"], name: "index_segment_tram_lines_on_segment_id"
+    t.index ["tram_line_id"], name: "index_segment_tram_lines_on_tram_line_id"
+  end
 
   create_table "segments", force: :cascade do |t|
     t.integer "station_a_id", null: false
@@ -31,4 +41,12 @@ ActiveRecord::Schema.define(version: 2019_11_25_225856) do
     t.index ["simple_name"], name: "index_stations_on_simple_name", unique: true
   end
 
+  create_table "tram_lines", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "segment_tram_lines", "segments"
+  add_foreign_key "segment_tram_lines", "tram_lines"
 end
