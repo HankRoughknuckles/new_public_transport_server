@@ -1,3 +1,4 @@
+# typed: false
 FactoryBot.define do
   factory :station do
     name { 'Petriny' }

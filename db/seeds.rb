@@ -1,3 +1,4 @@
+# typed: strict
 require 'line_creators'
 require 'lines'
 

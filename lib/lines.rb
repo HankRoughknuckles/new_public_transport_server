@@ -1,3 +1,4 @@
+# typed: true
 LINE_1 = [
   'Sídliště Petřiny',
   'Petřiny',
