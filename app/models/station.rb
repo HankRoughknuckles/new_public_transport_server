@@ -1,3 +1,4 @@
+# typed: false
 class Station < ApplicationRecord
   has_many :neighbor_segments, class_name: 'Segment', foreign_key: 'station_a_id'
   has_many :neighbors, through: :neighbor_segments, source: 'station_b'

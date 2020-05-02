@@ -1,3 +1,4 @@
+# typed: true
 def create_line(line = [])
   line.each_with_index do |station_name, index|
     station = Station.find_or_create_by(name: station_name)

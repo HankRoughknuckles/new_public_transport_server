@@ -1,3 +1,4 @@
+# typed: false
 FactoryBot.define do
   factory :segment do
     association :station_a, factory: :station
