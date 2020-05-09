@@ -1,7 +1,7 @@
 # typed: false
 FactoryBot.define do
   factory :station do
-    name { 'Petriny' }
-    simple_name { 'Petriny' }
+    sequence(:name) { |n| "Station #{n}" }
+    simple_name {}
   end
 end

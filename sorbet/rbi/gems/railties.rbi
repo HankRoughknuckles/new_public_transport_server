@@ -547,6 +547,3 @@ class Rails::Application::DefaultMiddlewareStack
 end
 class Rails::Rack::Logger < ActiveSupport::LogSubscriber
 end
-class Rails::BacktraceCleaner < ActiveSupport::BacktraceCleaner
-  def initialize; end
-end

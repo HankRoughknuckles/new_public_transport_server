@@ -5,7 +5,7 @@
 #
 #   https://github.com/sorbet/sorbet-typed/edit/master/lib/activerecord/all/activerecord.rbi
 #
-# typed: false
+# typed: strong
 
 VariadicUntypedFunction = T.type_alias { Proc }
 AssociationCallback = T.type_alias do
@@ -90,7 +90,7 @@ module ActiveRecord::Associations::ClassMethods
       dependent: T.nilable(T.any(Symbol, String)),
       foreign_key: T.nilable(T.any(Symbol, String)),
       foreign_type: T.nilable(T.any(Symbol, String)),
-      inverse_of: T.nilable(T.any(Symbol, String)),
+      inverse_of: T.nilable(T.any(Symbol, String, FalseClass)),
       primary_key: T.nilable(T.any(Symbol, String)),
       required: T.nilable(T::Boolean),
       source: T.nilable(T.any(Symbol, String)),
@@ -126,11 +126,11 @@ module ActiveRecord::Associations::ClassMethods
       scope: T.nilable(T.proc.void),
       autosave: T.nilable(T::Boolean),
       class_name: T.nilable(T.any(Symbol, String)),
-      counter_cache: T.nilable(T::Boolean),
+      counter_cache: T.nilable(T.any(Symbol, String, T::Boolean)),
       dependent: T.nilable(T.any(Symbol, String)),
       foreign_key: T.nilable(T.any(Symbol, String)),
       foreign_type: T.nilable(T.any(Symbol, String)),
-      inverse_of: T.nilable(T.any(Symbol, String)),
+      inverse_of: T.nilable(T.any(Symbol, String, FalseClass)),
       optional: T.nilable(T::Boolean),
       polymorphic: T.nilable(T::Boolean),
       primary_key: T.nilable(T.any(Symbol, String)),
@@ -1448,3 +1448,7 @@ class ActiveRecord::Relation
   sig { returns(T::Boolean) }
   def many?; end
 end
+
+module ActiveRecord::Batches; end
+
+class ActiveRecord::Batches::BatchEnumerator; end

@@ -226,13 +226,13 @@ class String
   sig { params(position: Integer).returns(String) }
   def to(position); end
 
-  sig { returns(Date) }
+  sig { returns(T.nilable(Date)) }
   def to_date; end
 
-  sig { returns(DateTime) }
+  sig { returns(T.nilable(DateTime)) }
   def to_datetime; end
 
-  sig { params(form: Symbol).returns(Time) }
+  sig { params(form: Symbol).returns(T.nilable(Time)) }
   def to_time(form = :local); end
 
   sig { params(truncate_at: Integer, separator: T.nilable(T.any(String, Regexp)), omission: String).returns(String) }
@@ -258,13 +258,13 @@ class Array
   sig { returns(T::Hash[T.untyped, T.untyped]) }
   def extract_options!; end
 
-  sig { returns(Elem) }
+  sig { returns(T.nilable(Elem)) }
   def fifth; end
 
-  sig { returns(Elem) }
+  sig { returns(T.nilable(Elem)) }
   def forty_two; end
 
-  sig { returns(Elem) }
+  sig { returns(T.nilable(Elem)) }
   def fourth; end
 
   sig { params(position: Integer).returns(T::Array[T.untyped]) }
@@ -279,10 +279,10 @@ class Array
   sig { returns(T.untyped) }
   def inquiry; end
 
-  sig { returns(Elem) }
+  sig { returns(T.nilable(Elem)) }
   def second; end
 
-  sig { returns(Elem) }
+  sig { returns(T.nilable(Elem)) }
   def second_to_last; end
 
   sig do
@@ -293,10 +293,10 @@ class Array
   end
   def split(value = nil, &blk); end
 
-  sig { returns(Elem) }
+  sig { returns(T.nilable(Elem)) }
   def third; end
 
-  sig { returns(Elem) }
+  sig { returns(T.nilable(Elem)) }
   def third_to_last; end
 
   sig { params(position: Integer).returns(T::Array[T.untyped]) }
@@ -304,7 +304,7 @@ class Array
 
   # to_default_s is an alias of the core method 'to_s'
   sig {returns(String)}
-  def to_defaul_s; end
+  def to_default_s; end
 
   sig { params(format: Symbol).returns(String) }
   def to_formatted_s(format = :default); end
@@ -600,7 +600,7 @@ class ActiveSupport::TimeWithZone
   def period; end
 
   # Returns the simultaneous time in `Time.zone`, or the specified zone.
-  sig { params(new_zone: T.untyped).returns(Time) }
+  sig { params(new_zone: T.untyped).returns(ActiveSupport::TimeWithZone) }
   def in_time_zone(new_zone = ::Time.zone); end
 
   # Returns a `Time` instance of the simultaneous time in the system timezone.
@@ -881,6 +881,9 @@ class ActiveSupport::TimeWithZone
   sig { returns(Rational) }
   def to_r; end
 
+  sig { returns(Date) }
+  def to_date; end
+
   # Returns an instance of DateTime with the timezone's UTC offset
   #
   # ```ruby
@@ -895,6 +898,14 @@ class ActiveSupport::TimeWithZone
   # of `ActiveSupport.to_time_preserves_timezone`.
   sig { returns(Time) }
   def to_time; end
+
+  # Uses Date to provide precise Time calculations for years, months, and days according to the proleptic Gregorian calendar.
+  # The result is returned as a new `TimeWithZone` object.
+  # The options parameter takes a hash with any of these keys: :years, :months, :weeks, :days, :hours, :minutes, :seconds.
+  # If advancing by a value of variable length (i.e., years, weeks, months, days), move forward from `time`, otherwise move forward
+  # from utc, for accuracy when moving across DST boundaries.
+  sig { params(options: T::Hash[Symbol, T.any(Integer, Float)]).returns(ActiveSupport::TimeWithZone) }
+  def advance(options); end
 end
 
 # defines some of the methods at https://github.com/rails/rails/blob/v6.0.0/activesupport/lib/active_support/core_ext/date
@@ -1015,7 +1026,7 @@ class ActiveSupport::TimeZone
   # numeric value it is either the hour offset, or the second offset, of the
   # timezone to find. (The first one with that offset will be returned.)
   # Returns `nil` if no such time zone is known to the system.
-  sig { params(arg: T.any(String, Numeric, ActiveSupport::Duration)).returns(ActiveSupport::TimeZone) }
+  sig { params(arg: T.any(String, Numeric, ActiveSupport::Duration)).returns(T.nilable(ActiveSupport::TimeZone)) }
   def self.[](arg); end
 
   # Returns an array of all TimeZone objects. There are multiple
@@ -1405,11 +1416,11 @@ class ActiveSupport::Duration
   sig { params(precision: T.nilable(Integer)).returns(String) }
   def iso8601(precision: nil); end
 
-  sig { returns(ActiveSupport::TimeWithZone) }
-  def from_now; end
+  sig { params(time: T.any(ActiveSupport::TimeWithZone, Date)).returns(ActiveSupport::TimeWithZone) }
+  def from_now(time = Time.current); end
 
-  sig { returns(ActiveSupport::TimeWithZone) }
-  def ago; end
+  sig { params(time: T.any(ActiveSupport::TimeWithZone, Date)).returns(ActiveSupport::TimeWithZone) }
+  def ago(time = Time.current); end
 end
 
 module Benchmark
