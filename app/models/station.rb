@@ -21,4 +21,10 @@ class Station < ApplicationRecord
     Segment.find_or_create_by(station_a: self, station_b: neighbor, travel_time: travel_time)
     Segment.find_or_create_by(station_a: neighbor, station_b: self, travel_time: travel_time)
   end
+
+  sig { void }
+  # TODO: add tests
+  def outgoing_segments
+    Segment.where({station_a_id: self.id})
+  end
 end
