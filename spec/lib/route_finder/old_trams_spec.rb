@@ -1,9 +1,9 @@
 # typed: false
 require 'rails_helper'
-require './lib/route_finder_for_old_trams'
-include RouteFinderForOldTrams
+require './lib/route_finder'
+include RouteFinder::OldTrams
 
-describe RouteFinderForOldTrams do
+describe RouteFinder::OldTrams do
   describe 'When A-B-C are all on the same line' do
     let(:station_a) { create(:station, name: 'a') }
     let(:station_b) { create(:station, name: 'b') }
