@@ -1,9 +1,9 @@
 # typed: false
 require 'rails_helper'
 require './lib/route_finder'
-include RouteFinder::OldTrams
+include RouteFinder::OldTramRouteFinder
 
-describe RouteFinder::OldTrams do
+describe RouteFinder::OldTramRouteFinder do
   describe 'When A-B-C are all on the same line' do
     let(:station_a) { create(:station, name: 'a') }
     let(:station_b) { create(:station, name: 'b') }
@@ -16,17 +16,17 @@ describe RouteFinder::OldTrams do
     end
 
     it 'should show the shortest route from A-B as AB' do
-      expect(shortest_path(station_a, station_b).to_a)
+      expect(shortest_path(station_a, station_b).stations)
         .to eq [station_a, station_b]
     end
 
     it 'should show the shortest route from B-C as BC' do
-      expect(shortest_path(station_b, station_c).to_a)
+      expect(shortest_path(station_b, station_c).stations)
         .to eq [station_b, station_c]
     end
 
     it 'should show the shortest route from A-C as ABC' do
-      expect(shortest_path(station_a, station_c).to_a)
+      expect(shortest_path(station_a, station_c).stations)
         .to eq [station_a, station_b, station_c]
     end
   end
@@ -44,17 +44,17 @@ describe RouteFinder::OldTrams do
     end
 
     it 'should show the shortest route from A-B as AB' do
-      expect(shortest_path(station_a, station_b).to_a)
+      expect(shortest_path(station_a, station_b).stations)
         .to eq [station_a, station_b]
     end
 
     it 'should show the shortest route from B-C as BC' do
-      expect(shortest_path(station_b, station_c).to_a)
+      expect(shortest_path(station_b, station_c).stations)
         .to eq [station_b, station_c]
     end
 
     it 'should show the shortest route from A-C as AC' do
-      expect(shortest_path(station_a, station_c).to_a)
+      expect(shortest_path(station_a, station_c).stations)
         .to eq [station_a, station_c]
     end
   end
@@ -72,17 +72,17 @@ describe RouteFinder::OldTrams do
     end
 
     it 'should show the shortest route from A-B as AB' do
-      expect(shortest_path(station_a, station_b).to_a)
+      expect(shortest_path(station_a, station_b).stations)
         .to eq [station_a, station_b]
     end
 
     it 'should show the shortest route from B-C as BC' do
-      expect(shortest_path(station_b, station_c).to_a)
+      expect(shortest_path(station_b, station_c).stations)
         .to eq [station_b, station_c]
     end
 
     it 'should show the shortest route from A-C as ABC' do
-      expect(shortest_path(station_a, station_c).to_a)
+      expect(shortest_path(station_a, station_c).stations)
         .to eq [station_a, station_b, station_c]
     end
   end
@@ -102,17 +102,17 @@ describe RouteFinder::OldTrams do
       end
 
       it 'should show the shortest route from A-B as AB' do
-        expect(shortest_path(station_a, station_b).to_a)
+        expect(shortest_path(station_a, station_b).stations)
           .to eq [station_a, station_b]
       end
 
       it 'should show the shortest route from B-C as BC' do
-        expect(shortest_path(station_b, station_c).to_a)
+        expect(shortest_path(station_b, station_c).stations)
           .to eq [station_b, station_c]
       end
 
       it 'should show the shortest route from A-C as AC' do
-        expect(shortest_path(station_a, station_c).to_a)
+        expect(shortest_path(station_a, station_c).stations)
           .to eq [station_a, station_c]
       end
     end

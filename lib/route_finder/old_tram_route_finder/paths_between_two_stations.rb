@@ -1,7 +1,8 @@
 module RouteFinder
-  module OldTrams
-    # TODO: dockblock
+  module OldTramRouteFinder
     # TODO: tests
+    # Represents all the possible paths that can exist between a start_station
+    # and an end_station
     class PathsBetweenTwoStations
       extend T::Sig
 
@@ -14,13 +15,17 @@ module RouteFinder
         @paths = T.let([], T::Array[Path])
       end
 
+      # add a path that connects start_station to end_station
       sig { params(path: Path).void }
       def add_path(path)
         @paths << path
       end
 
-      sig { returns(T.nilable(RouteFinder::OldTrams::Path)) }
+      # returns which path out of all of them would take the least amount of
+      # time to travel
+      sig { returns(T.nilable(Path)) }
       def shortest
+        # TODO: test what happens when @paths is empty
         @paths.reduce(@paths.first) do |smallest, path|
           path.travel_time < smallest.travel_time ? path : smallest
         end
