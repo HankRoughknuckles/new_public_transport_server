@@ -28,8 +28,8 @@ class Station < ApplicationRecord
   end
 
   # TODO: add tests
-  # sig { returns Segment::ActiveRecord_Relation }
+  sig { returns T::Array[Segment] }
   def outgoing_segments
-    Segment.where({station_a_id: self.id})
+    Segment.where({station_a_id: self.id}).to_a
   end
 end

@@ -19,9 +19,9 @@ module RouteFinder
         @paths << path
       end
 
-      # sig { returns(Path) }
-      def shortest_path
-        @paths.reduce(OpenStruct.new({travel_time: Float::INFINITY})) do |smallest, path|
+      sig { returns(T.nilable(RouteFinder::OldTrams::Path)) }
+      def shortest
+        @paths.reduce(@paths.first) do |smallest, path|
           path.travel_time < smallest.travel_time ? path : smallest
         end
       end

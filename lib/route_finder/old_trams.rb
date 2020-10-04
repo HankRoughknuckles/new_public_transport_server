@@ -4,41 +4,39 @@ require_relative 'old_trams/path'
 require_relative 'old_trams/paths_between_two_stations'
 require_relative 'old_trams/paths_from_station'
 
-# TODO: try RouteFinder::OldTrams as name instead of nesting on two lines
 module RouteFinder
   module OldTrams
+    extend T::Sig
+
+    sig { params(start_station: Station, end_station: Station).returns(T.nilable(Path)) }
     def shortest_path(start_station, end_station)
-      shortest_paths_from_station(start_station)[end_station.id]
+      shortest_paths = all_paths_from_station(start_station).shortest_paths
+      shortest_paths[end_station.id]
     end
 
-    # sig { params(start_station: Station).returns(T::Hash[Integer, Path]) }
-    def shortest_paths_from_station(start_station)
-      all_paths = all_paths_from_station(start_station)
-      all_paths.each_with_object({}) do |(id, pathsBetween), acc|
-        acc[id] = pathsBetween.shortest_path
-      end
-    end
-
+    sig { params(start_station: Station).returns(PathsFromStation) }
     def all_paths_from_station(start_station)
-      # TODO: try using PathsFromStation class
-      paths_from_start = Station.all.reduce({}) do |acc, station|
-        acc[station.id] = PathsBetweenTwoStations.new(start_station, station)
-        acc
-      end
+      paths_from_start = PathsFromStation.new(start_station)
 
-      paths_to_check = start_station.outgoing_segments.map { |segment| Path.new([segment]) }
-      start_station.outgoing_segments.each do |segment|
-        paths_from_start[segment.station_b.id].add_path(Path.new([segment]))
+      # start by checking the segments going out from the start
+      paths_to_check = start_station.outgoing_segments.map do |segment|
+        Path.new([segment])
       end
 
       paths_to_check.each do |path|
-        final_station = path.final_station
+        final_station = T.must(path.final_station)
         next_segments = final_station.outgoing_segments
+
+        # for each segment attached to the next station
+        #   - if each outgoing segment from there doesn't loop back into our path
+        #     - add it to the list of possible paths (from start_station to that)
+        #     - check every path going out from there
         next_segments.each do |next_segment|
           next_station = next_segment.station_b
+
           if !path.include?(next_station)
             new_path = Path.new(path.segments + [next_segment])
-            paths_from_start[next_station.id].add_path(new_path)
+            paths_from_start.add_path(next_station, new_path)
             paths_to_check << new_path
           end
         end
