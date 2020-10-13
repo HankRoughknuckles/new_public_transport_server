@@ -6,6 +6,8 @@ module RouteFinder
     # and what paths one would take in order to get to those destinations.
     class PathsFromStation
       extend T::Sig
+      sig { returns T::Hash[Integer, PathsBetweenTwoStations] }
+      attr_reader :paths
 
       sig { params(start_station: Station).void }
       def initialize(start_station)
