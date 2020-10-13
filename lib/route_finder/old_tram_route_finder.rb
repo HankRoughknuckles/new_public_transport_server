@@ -12,8 +12,7 @@ module RouteFinder
     # TODO: test what happens if start and end aren't attached
     # TODO: test what happens if start_station has no outgoing segments
     def shortest_path(start_station, end_station)
-      shortest_paths = all_paths_from_station(start_station).shortest_paths
-      shortest_paths[end_station.id]
+      all_paths_from_station(start_station).shortest_to(end_station)
     end
 
     sig { params(start_station: Station).returns(PathsFromStation) }

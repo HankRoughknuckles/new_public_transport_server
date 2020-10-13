@@ -15,7 +15,11 @@ module RouteFinder
         @paths = T.let([], T::Array[Path])
       end
 
-      # add a path that connects start_station to end_station
+      def [](index)
+        @paths[index]
+      end
+
+      # add a path that connects @start_station to @end_station
       sig { params(path: Path).void }
       def add_path(path)
         @paths << path

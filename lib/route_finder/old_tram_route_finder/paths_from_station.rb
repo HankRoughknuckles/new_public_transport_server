@@ -33,7 +33,18 @@ module RouteFinder
       # destination
       sig { params(destination: Station, path: Path).void }
       def add_path(destination, path)
+        # TODO: use all_paths_to
         @paths[destination.id]&.add_path(path)
+      end
+
+      sig { params(destination: Station).returns T.nilable(PathsBetweenTwoStations) }
+      def all_paths_to(destination)
+        @paths[destination.id]
+      end
+
+      sig { params(destination: Station).returns T.nilable(Path) }
+      def shortest_to(destination)
+        self.all_paths_to(destination)&.shortest
       end
 
       # Get the shortest path to each station that start_station is capable of
