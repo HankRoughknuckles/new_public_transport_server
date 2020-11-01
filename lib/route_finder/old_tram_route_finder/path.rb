@@ -1,3 +1,4 @@
+# typed: strict
 module RouteFinder
   module OldTramRouteFinder
     # Represents a single path from a starting station to a destination station.

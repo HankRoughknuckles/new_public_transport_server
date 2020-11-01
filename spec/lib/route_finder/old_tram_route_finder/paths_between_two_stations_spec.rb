@@ -27,21 +27,35 @@ describe RouteFinder::OldTramRouteFinder::PathsBetweenTwoStations do
   end
 
   describe 'shortest' do
-    it 'should return the path from @paths that has the shortest travel_time' do
-      shorter_path = Path.new([create(:segment)])
-      shorter_path.stub(:travel_time).with(1)
-      longer_path = Path.new([create(:segment)])
-      longer_path.stub(:travel_time).with(1)
-      # shorter_path = double()
-      # allow(shorter_path).to receive(:travel_time).and_return(1)
-      # longer_path = double()
-      # allow(longer_path).to receive(:travel_time).and_return(5)
-
+    it 'should return nil if @paths is empty' do
       paths_between_two_stations = PathsBetweenTwoStations.new(create(:station), create(:station))
-      paths_between_two_stations.add_path(shorter_path)
-      paths_between_two_stations.add_path(longer_path)
+      expect(paths_between_two_stations.shortest).to eq nil
+    end
 
-      expect(paths_between_two_stations.shortest).to eq shorter_path
+    it 'should return the path from @paths that has the shortest travel_time' do
+      shorter = instance_double('RouteFinder::OldTramRouteFinder::Path', travel_time: 1)
+      longer = instance_double('RouteFinder::OldTramRouteFinder::Path', travel_time: 5)
+      paths_between_two_stations = PathsBetweenTwoStations.new(
+        create(:station),
+        create(:station)
+      )
+      paths_between_two_stations.add_path(longer)
+      paths_between_two_stations.add_path(shorter)
+
+      expect(paths_between_two_stations.shortest).to eq shorter
+    end
+
+    it 'should return the first one in the list if the times are the same' do
+      first = instance_double('RouteFinder::OldTramRouteFinder::Path', travel_time: 1)
+      second = instance_double('RouteFinder::OldTramRouteFinder::Path', travel_time: 1)
+      paths_between_two_stations = PathsBetweenTwoStations.new(
+        create(:station),
+        create(:station)
+      )
+      paths_between_two_stations.add_path(first)
+      paths_between_two_stations.add_path(second)
+
+      expect(paths_between_two_stations.shortest).to eq first
     end
   end
 end

@@ -1,6 +1,6 @@
+# typed: strict
 module RouteFinder
   module OldTramRouteFinder
-    # TODO: tests
     # Represents all the possible paths that can exist between a start_station
     # and an end_station
     class PathsBetweenTwoStations
@@ -31,7 +31,6 @@ module RouteFinder
       # time to travel
       sig { returns(T.nilable(Path)) }
       def shortest
-        # TODO: test what happens when @paths is empty
         @paths.reduce(@paths.first) do |smallest, path|
           path.travel_time < smallest.travel_time ? path : smallest
         end

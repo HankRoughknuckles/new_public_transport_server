@@ -1,4 +1,4 @@
-# typed: true
+# typed: strict
 sig { params(line: T::Array[String]).void }
 def create_line(line = [])
   line.each_with_index do |station_name, index|
