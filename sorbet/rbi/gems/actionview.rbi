@@ -760,7 +760,7 @@ class ActionView::Template::Handlers::Builder
   def self.default_format=(val); end
   def self.default_format?; end
 end
-class ActionView::Template::LegacyTemplate < Anonymous_Delegator_17
+class ActionView::Template::LegacyTemplate < Anonymous_Delegator_8
   def initialize(template, source); end
   def source; end
 end
@@ -1371,9 +1371,9 @@ class ActionView::TestCase::TestController < ActionController::Base
   def self.middleware_stack; end
   include ActionDispatch::Routing::UrlFor
   include ActionDispatch::TestProcess
-  include Anonymous_Module_18
+  include Anonymous_Module_9
 end
-module Anonymous_Module_18
+module Anonymous_Module_9
   def _generate_paths_by_default; end
   def _routes; end
   def self._routes; end
@@ -1385,11 +1385,11 @@ module Anonymous_Module_18
   def self.url_for(options); end
   def self.url_options; end
   extend ActiveSupport::Concern
-  extend Anonymous_Module_19
-  extend Anonymous_Module_20
+  extend Anonymous_Module_10
+  extend Anonymous_Module_11
   include ActionDispatch::Routing::UrlFor
-  include Anonymous_Module_19
-  include Anonymous_Module_20
+  include Anonymous_Module_10
+  include Anonymous_Module_11
 end
 module ActionView::TestCase::Behavior
   def _routes; end

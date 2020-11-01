@@ -2,16 +2,17 @@
 #   srb rbi todo
 
 # typed: strong
-module ::Anonymous_Delegator_11; end
-module ::Anonymous_Delegator_12; end
 module ::Anonymous_Delegator_13; end
-module ::Anonymous_Delegator_14; end
-module ::Anonymous_Delegator_15; end
-module ::Anonymous_Delegator_16; end
-module ::Anonymous_Delegator_17; end
-module ::Anonymous_Delegator_22; end
 module ::Anonymous_Delegator_3; end
-module ActiveRecord::CollectionCacheKey; end
-module Anonymous_Module_18::Anonymous_Module_19; end
-module Anonymous_Module_18::Anonymous_Module_20; end
+module ::Anonymous_Delegator_8; end
+module ActiveRecord::Delegation::DelegateCache; end
+module Anonymous_Module_20::Anonymous_Module_10; end
+module Anonymous_Module_20::Anonymous_Module_11; end
+module Anonymous_Module_9::Anonymous_Module_10; end
+module Anonymous_Module_9::Anonymous_Module_11; end
 module T::CompatibilityPatches::RecorderExtensions; end
+module T::InterfaceWrapper::Helpers; end
+module T::Private::Abstract::Hooks; end
+module T::Private::Methods::MethodHooks; end
+module T::Private::Methods::SingletonMethodHooks; end
+module T::Props::Plugin::ClassMethods; end

@@ -364,7 +364,7 @@ class ActionMailer::Base < AbstractController::Base
   extend ActiveSupport::Callbacks::ClassMethods
   extend ActiveSupport::DescendantsTracker
   extend ActiveSupport::Rescuable::ClassMethods
-  extend Anonymous_Module_21
+  extend Anonymous_Module_12
   include AbstractController::AssetPaths
   include AbstractController::Caching
   include AbstractController::Caching::Fragments
@@ -400,6 +400,6 @@ class ActionMailer::Base::LateAttachmentsProxy < SimpleDelegator
   def _raise_error; end
   def inline; end
 end
-module Anonymous_Module_21
+module Anonymous_Module_12
   def inherited(klass); end
 end
