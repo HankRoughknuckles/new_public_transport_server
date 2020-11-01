@@ -1,4 +1,3 @@
-# TODO: tests
 module RouteFinder
   module OldTramRouteFinder
     # Represents a single path from a starting station to a destination station.
@@ -6,7 +5,14 @@ module RouteFinder
       extend T::Sig
       attr_accessor :segments
 
-      TRAM_CHANGE_DELAY = T.let(5 * 60, Integer) # 5 minutes
+      # The estimated time one would have to wait if they changed trams in
+      # a journey.  Represents the time spent waiting for their connection to
+      # arrive.
+      # Note, this is only used when calculating how much time you'd spend
+      # changing trams in the middle of a journey.  It is NOT added to the front
+      # of a journey to calculate how long you're waiting to get on the first tram
+      # to begin a journey.
+      TRAM_CHANGE_DELAY = T.let(5.minutes.to_i, Integer)
 
       sig { params(segments: T::Array[Segment]).void }
       def initialize(segments)
@@ -19,7 +25,6 @@ module RouteFinder
         @segments.last&.station_b
       end
 
-      # TODO: write tests
       # whether the passed station is on the path
       sig { params(station: Station).returns(T::Boolean) }
       def include?(station)
@@ -34,7 +39,8 @@ module RouteFinder
       # average TRAM_CHANGE_DELAY seconds worth of waiting for each transfer
       sig { returns(Integer) }
       def travel_time
-        # TODO: guard against empty self.segments
+        return 0 if @segments.empty?
+
         total_time = 0
         current_tram_line = @segments.first.tram_line
         @segments.each do |segment|
@@ -49,10 +55,12 @@ module RouteFinder
         return total_time
       end
 
-      # an array of all of the stations in order from start to finish
+      # an array of all of the stations in the path in order from start to
+      # finish
       sig { returns(T::Array[Station]) }
       def stations
-        self.segments.map(&:station_a) + [self.final_station]
+        return [] if @segments.empty?
+        @segments.map(&:station_a) + [self.final_station]
       end
     end
   end

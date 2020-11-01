@@ -54,6 +54,12 @@ RSpec.describe Station, type: :model do
   end
 
   describe '#outgoing_segments' do
-    pending 'should show all segments where this station is the origin'
+    it 'should show all segments where this station is the origin' do
+      start_station = create(:station)
+      other_station = create(:station)
+      segment = create(:segment, station_a: start_station, station_b: other_station)
+
+      expect(start_station.outgoing_segments).to eq [segment]
+    end
   end
 end

@@ -37,11 +37,15 @@ module RouteFinder
         @paths[destination.id]&.add_path(path)
       end
 
+      # Returns an object representing all the paths that exist between
+      # @start_station and the passed destination
       sig { params(destination: Station).returns T.nilable(PathsBetweenTwoStations) }
       def all_paths_to(destination)
         @paths[destination.id]
       end
 
+      # Returns the path that has the shortest travel time between
+      # @start_station and the passed destination
       sig { params(destination: Station).returns T.nilable(Path) }
       def shortest_to(destination)
         self.all_paths_to(destination)&.shortest

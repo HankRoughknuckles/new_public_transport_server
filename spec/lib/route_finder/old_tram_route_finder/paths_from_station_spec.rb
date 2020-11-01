@@ -73,6 +73,23 @@ describe RouteFinder::OldTramRouteFinder::PathsFromStation do
   end
 
   describe 'shortest_paths' do
-    pending 'should return a hash of paths'
+    # start_station is neighbors with destination
+    let(:start_station) { create(:station) }
+    let(:destination) { create(:station) }
+
+    before { start_station.add_neighbor(destination, create(:tram_line), 10) }
+
+    it 'should return a hash of paths' do
+      paths_from_station = PathsFromStation.new(start_station)
+
+      expect(paths_from_station.shortest_paths[destination.id].class).to eq Path
+    end
+
+    it 'should have a path in the output with the proper destination' do
+      paths_from_station = PathsFromStation.new(start_station)
+      path = paths_from_station.shortest_paths[destination.id]
+
+      expect(path.final_station).to eq destination
+    end
   end
 end
