@@ -6,7 +6,12 @@ module RouteFinder
     class PathsBetweenTwoStations
       extend T::Sig
 
-      attr_accessor :start_station, :end_station, :paths
+      sig { returns(Station) }
+      attr_accessor :start_station
+      sig { returns(Station) }
+      attr_accessor :end_station
+      sig { returns(T::Array[Path]) }
+      attr_accessor :paths
 
       sig { params(start_station: Station, end_station: Station).void }
       def initialize(start_station, end_station)
@@ -17,6 +22,7 @@ module RouteFinder
 
       # a shortcut for accessing that paths array that's nested inside this
       # class
+      sig { params(index: Integer).returns(T.nilable(Path)) }
       def [](index)
         @paths[index]
       end

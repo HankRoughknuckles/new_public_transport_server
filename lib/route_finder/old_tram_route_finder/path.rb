@@ -4,6 +4,8 @@ module RouteFinder
     # Represents a single path from a starting station to a destination station.
     class Path
       extend T::Sig
+
+      sig { returns(T::Array[Segment]) }
       attr_accessor :segments
 
       # The estimated time one would have to wait if they changed trams in
@@ -17,7 +19,7 @@ module RouteFinder
 
       sig { params(segments: T::Array[Segment]).void }
       def initialize(segments)
-        @segments = segments
+        @segments = T.let(segments, T::Array[Segment])
       end
 
       # the final station that's at the end of the path
@@ -43,7 +45,7 @@ module RouteFinder
         return 0 if @segments.empty?
 
         total_time = 0
-        current_tram_line = @segments.first.tram_line
+        current_tram_line = T.must(@segments.first).tram_line
         @segments.each do |segment|
           total_time += (segment.travel_time || 0)
 
@@ -61,7 +63,7 @@ module RouteFinder
       sig { returns(T::Array[Station]) }
       def stations
         return [] if @segments.empty?
-        @segments.map(&:station_a) + [self.final_station]
+        segments.map(&:station_a) << T.must(self.final_station)
       end
     end
   end
