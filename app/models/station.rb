@@ -27,7 +27,6 @@ class Station < ApplicationRecord
     Segment.find_or_create_by(station_a: neighbor, station_b: self, travel_time: travel_time, tram_line: tram_line)
   end
 
-  # TODO: add tests
   sig { returns T::Array[Segment] }
   def outgoing_segments
     Segment.where({station_a_id: self.id}).to_a
