@@ -4,6 +4,10 @@ require './lib/route_finder'
 include RouteFinder::OldTramRouteFinder
 
 describe RouteFinder::OldTramRouteFinder do
+  it 'should return nil when start and end destinations arent connected' do
+    expect(shortest_path(create(:station), create(:station))).to eq nil
+  end
+
   describe 'When A-B-C are all on the same line' do
     let(:station_a) { create(:station, name: 'a') }
     let(:station_b) { create(:station, name: 'b') }

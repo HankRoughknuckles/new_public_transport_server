@@ -1,7 +1,6 @@
 # typed: strict
 module RouteFinder
   module OldTramRouteFinder
-    # TODO: tests
     # For managing what stations a given start_station is capable of reaching,
     # and what paths one would take in order to get to those destinations.
     class PathsFromStation
@@ -33,8 +32,7 @@ module RouteFinder
       # destination
       sig { params(destination: Station, path: Path).void }
       def add_path(destination, path)
-        # TODO: use all_paths_to
-        @paths[destination.id]&.add_path(path)
+        self.all_paths_to(destination)&.add_path(path)
       end
 
       # Returns an object representing all the paths that exist between

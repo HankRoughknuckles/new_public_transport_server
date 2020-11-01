@@ -9,8 +9,6 @@ module RouteFinder
     extend T::Sig
 
     sig { params(start_station: Station, end_station: Station).returns(T.nilable(Path)) }
-    # TODO: test what happens if start and end aren't attached
-    # TODO: test what happens if start_station has no outgoing segments
     def shortest_path(start_station, end_station)
       all_paths_from_station(start_station).shortest_to(end_station)
     end

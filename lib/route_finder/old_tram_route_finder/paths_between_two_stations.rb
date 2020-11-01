@@ -15,6 +15,8 @@ module RouteFinder
         @paths = T.let([], T::Array[Path])
       end
 
+      # a shortcut for accessing that paths array that's nested inside this
+      # class
       def [](index)
         @paths[index]
       end
