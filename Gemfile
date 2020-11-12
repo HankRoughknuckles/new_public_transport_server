@@ -26,4 +26,8 @@ group :development do
   gem 'sorbet-rails'
 end
 
+group :test do
+  gem 'rspec-sorbet'
+end
+
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
