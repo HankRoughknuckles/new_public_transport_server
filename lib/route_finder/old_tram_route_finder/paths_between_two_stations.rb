@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # typed: strict
 module RouteFinder
   module OldTramRouteFinder
@@ -8,8 +10,10 @@ module RouteFinder
 
       sig { returns(Station) }
       attr_accessor :start_station
+
       sig { returns(Station) }
       attr_accessor :end_station
+
       sig { returns(T::Array[Path]) }
       attr_accessor :paths
 

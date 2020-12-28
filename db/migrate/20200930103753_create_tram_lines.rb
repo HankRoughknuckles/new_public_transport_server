@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # typed: true
 class CreateTramLines < ActiveRecord::Migration[6.0]
   def change

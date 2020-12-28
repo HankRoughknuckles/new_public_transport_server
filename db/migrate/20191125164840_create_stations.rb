@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # typed: true
 class CreateStations < ActiveRecord::Migration[6.0]
   def change

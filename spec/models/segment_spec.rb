@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # typed: false
 require 'rails_helper'
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # typed: false
 require 'rails_helper'
 
@@ -12,23 +14,23 @@ RSpec.describe Station, type: :model do
   describe '#neighbors' do
     it 'should return the other stations where this station is station_a in segment' do
       this_station = create(:station)
-      neighbor_1 = create(:station)
-      neighbor_2 = create(:station)
-      create(:segment, station_a: this_station, station_b: neighbor_1)
-      create(:segment, station_a: this_station, station_b: neighbor_2)
+      neighbor1 = create(:station)
+      neighbor2 = create(:station)
+      create(:segment, station_a: this_station, station_b: neighbor1)
+      create(:segment, station_a: this_station, station_b: neighbor2)
 
-      expect(this_station.neighbors).to eq [neighbor_1, neighbor_2]
+      expect(this_station.neighbors).to eq [neighbor1, neighbor2]
     end
 
     it 'should remove any duplicate stations if there are multiple connecting lines' do
       this_station = create(:station)
-      neighbor_1 = create(:station)
-      tram_line_1 = create(:tram_line)
-      tram_line_2 = create(:tram_line)
-      create(:segment, station_a: this_station, station_b: neighbor_1, tram_line: tram_line_1)
-      create(:segment, station_a: this_station, station_b: neighbor_1, tram_line: tram_line_2)
+      neighbor1 = create(:station)
+      tram_line1 = create(:tram_line)
+      tram_line2 = create(:tram_line)
+      create(:segment, station_a: this_station, station_b: neighbor1, tram_line: tram_line1)
+      create(:segment, station_a: this_station, station_b: neighbor1, tram_line: tram_line2)
 
-      expect(this_station.neighbors).to eq [neighbor_1]
+      expect(this_station.neighbors).to eq [neighbor1]
     end
   end
 

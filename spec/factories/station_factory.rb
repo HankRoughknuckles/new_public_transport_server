@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # typed: false
 FactoryBot.define do
   factory :station do

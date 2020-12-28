@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # typed: false
 require 'rails_helper'
 
@@ -13,7 +15,7 @@ RSpec.describe TramLine, type: :model do
   describe '.from_station_names' do
     it 'should persist the right name' do
       name = 'THE TRAM LINE NAME!'
-      TramLine.from_station_names(name, true, ['station_1', 'station_2'])
+      TramLine.from_station_names(name, true, %w[station_1 station_2])
       persisted = TramLine.find_by_name(name)
 
       expect(persisted.name).to eq name
@@ -21,14 +23,14 @@ RSpec.describe TramLine, type: :model do
 
     describe 'persisting the outgoing flag' do
       it 'should work when true' do
-        TramLine.from_station_names('foo', true, ['station_1', 'station_2'])
+        TramLine.from_station_names('foo', true, %w[station_1 station_2])
         persisted = TramLine.find_by_name('foo')
 
         expect(persisted.outgoing).to eq true
       end
 
       it 'should work when false' do
-        TramLine.from_station_names('foo', false, ['station_1', 'station_2'])
+        TramLine.from_station_names('foo', false, %w[station_1 station_2])
         persisted = TramLine.find_by_name('foo')
 
         expect(persisted.outgoing).to eq false
@@ -36,7 +38,7 @@ RSpec.describe TramLine, type: :model do
     end
 
     it 'should add the stations properly' do
-      TramLine.from_station_names('foo', true, ['station_1', 'station_2'])
+      TramLine.from_station_names('foo', true, %w[station_1 station_2])
 
       expect(Station.find_by_name('station_1')).to be_present
       expect(Station.find_by_name('station_2')).to be_present
@@ -44,7 +46,7 @@ RSpec.describe TramLine, type: :model do
 
     describe 'adding the segments' do
       it 'should make segments from the first station to the last' do
-        TramLine.from_station_names('Foo line', true, ['station_1', 'station_2', 'station_3'])
+        TramLine.from_station_names('Foo line', true, %w[station_1 station_2 station_3])
         first_station = Station.find_by_name('station_1')
         second_station = Station.find_by_name('station_2')
         third_station = Station.find_by_name('station_3')
@@ -57,7 +59,7 @@ RSpec.describe TramLine, type: :model do
       end
 
       it 'should not make backward segments' do
-        TramLine.from_station_names('Foo line', true, ['station_1', 'station_2'])
+        TramLine.from_station_names('Foo line', true, %w[station_1 station_2])
         first_station = Station.find_by_name('station_1')
         second_station = Station.find_by_name('station_2')
 
@@ -66,7 +68,7 @@ RSpec.describe TramLine, type: :model do
       end
 
       it 'should make the segment belong to the proper line' do
-        TramLine.from_station_names('Foo line', true, ['station_1', 'station_2'])
+        TramLine.from_station_names('Foo line', true, %w[station_1 station_2])
         first_station = Station.find_by_name('station_1')
 
         segment = Segment.where(station_a: first_station).first
