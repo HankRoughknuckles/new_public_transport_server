@@ -32,12 +32,12 @@ RSpec.describe Station, type: :model do
     end
   end
 
-  describe '#add_neighbor' do
+  describe '#add_two_way_connection_with' do
     it 'should create a segment with this station as station_a' do
       this_station = create(:station)
       neighbor = create(:station)
       tram_line = create(:tram_line)
-      this_station.add_neighbor(neighbor, tram_line, 10)
+      this_station.add_two_way_connection_with(neighbor, tram_line, 10)
 
       expect(Segment.find_by(station_a: this_station)).to be_truthy
       expect(Segment.find_by(station_b: neighbor)).to be_truthy
@@ -47,7 +47,7 @@ RSpec.describe Station, type: :model do
       this_station = create(:station)
       neighbor = create(:station)
       tram_line = create(:tram_line)
-      this_station.add_neighbor(neighbor, tram_line, 10)
+      this_station.add_two_way_connection_with(neighbor, tram_line, 10)
 
       expect(Segment.find_by(station_a: neighbor, station_b: this_station)).to be_truthy
     end

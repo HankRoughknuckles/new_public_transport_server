@@ -15,7 +15,7 @@ class TramLine < ApplicationRecord
       station = Station.find_or_create_by(name: station_name)
       if index > 0
         previous_station = Station.find_or_create_by(name: station_names[index - 1])
-        station.add_neighbor(previous_station, tram_line)
+        station.add_two_way_connection_with(previous_station, tram_line)
       end
     end
 
