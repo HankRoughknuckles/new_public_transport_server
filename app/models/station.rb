@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 # typed: strict
 require 'sorbet-runtime'
 
+# Model representing each station in the tram network.  Stations are connected
+# to one another via Segments.
 class Station < ApplicationRecord
   extend T::Sig
 
@@ -13,12 +17,12 @@ class Station < ApplicationRecord
 
   sig { returns T::Array[Station] }
   def neighbors
-    self.outgoing_segments.map { |segment| segment.station_b }.uniq
+    outgoing_segments.map(&:station_b).uniq
   end
 
   sig { void }
   def convert_name_to_simple_name
-    self.simple_name = I18n.transliterate(self.name)
+    self.simple_name = I18n.transliterate(name)
   end
 
   # make a segment from this station to the passed one (on the passed tram
@@ -26,21 +30,21 @@ class Station < ApplicationRecord
   # on the same tram line). Note - this should not be used in production, this
   # is mostly for setting up test data.  In real life, there will be a separate
   # TramLine for each direction
-  sig { params({neighbor: Station, tram_line: TramLine, travel_time: T.nilable(Integer)}).void }
+  sig { params({ neighbor: Station, tram_line: TramLine, travel_time: T.nilable(Integer) }).void }
   def add_two_way_connection_with(neighbor, tram_line, travel_time = 2)
-    self.add_segment_going_to(neighbor, tram_line, travel_time)
+    add_segment_going_to(neighbor, tram_line, travel_time)
     neighbor.add_segment_going_to(self, tram_line, travel_time)
   end
 
   # make a one way connection with the passed neighbor, marking this station as
   # the start and the neighbor as the destination
-  sig { params({neighbor: Station, tram_line: TramLine, travel_time: T.nilable(Integer)}).void }
+  sig { params({ neighbor: Station, tram_line: TramLine, travel_time: T.nilable(Integer) }).void }
   def add_segment_going_to(neighbor, tram_line, travel_time = 2)
     Segment.find_or_create_by(station_a: self, station_b: neighbor, travel_time: travel_time, tram_line: tram_line)
   end
 
   sig { returns T::Array[Segment] }
   def outgoing_segments
-    Segment.where({station_a_id: self.id}).to_a
+    Segment.where({ station_a_id: id }).to_a
   end
 end

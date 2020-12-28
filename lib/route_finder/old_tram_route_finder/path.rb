@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # typed: strict
 module RouteFinder
   module OldTramRouteFinder
@@ -44,18 +46,19 @@ module RouteFinder
       def travel_time
         return 0 if @segments.empty?
 
-        total_time = 0
         current_tram_line = T.must(@segments.first).tram_line
-        @segments.each do |segment|
-          total_time += (segment.travel_time || 0)
+        @segments.reduce(0) do |total_travel_time, segment|
+          total_travel_time += (segment.travel_time || 0)
 
+          # account for the delay it would take to change the tram line, if
+          # needed
           if segment.tram_line != current_tram_line
-            total_time += TRAM_CHANGE_DELAY
+            total_travel_time += TRAM_CHANGE_DELAY
             current_tram_line = segment.tram_line
           end
-        end
 
-        return total_time
+          total_travel_time
+        end
       end
 
       # an array of all of the stations in the path in order from start to
@@ -63,7 +66,8 @@ module RouteFinder
       sig { returns(T::Array[Station]) }
       def stations
         return [] if @segments.empty?
-        segments.map(&:station_a) << T.must(self.final_station)
+
+        segments.map(&:station_a) << T.must(final_station)
       end
     end
   end

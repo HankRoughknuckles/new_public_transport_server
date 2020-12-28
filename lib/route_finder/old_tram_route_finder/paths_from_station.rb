@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # typed: strict
 module RouteFinder
   module OldTramRouteFinder
@@ -32,7 +34,7 @@ module RouteFinder
       # destination
       sig { params(destination: Station, path: Path).void }
       def add_path(destination, path)
-        self.all_paths_to(destination)&.add_path(path)
+        all_paths_to(destination)&.add_path(path)
       end
 
       # Returns an object representing all the paths that exist between
@@ -46,16 +48,14 @@ module RouteFinder
       # @start_station and the passed destination
       sig { params(destination: Station).returns T.nilable(Path) }
       def shortest_to(destination)
-        self.all_paths_to(destination)&.shortest
+        all_paths_to(destination)&.shortest
       end
 
       # Get the shortest path to each station that start_station is capable of
       # reaching.  Keyed by the destination station's id
       sig { returns(T::Hash[Integer, T.nilable(Path)]) }
       def shortest_paths
-        @paths.each_with_object({}) do |(id, pathsBetween), acc|
-          acc[id] = pathsBetween.shortest
-        end
+        @paths.transform_values(&:shortest)
       end
     end
   end
