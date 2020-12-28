@@ -1023,7 +1023,7 @@ LINE_15_OUTGOING_STATIONS = [
 ]
 
 LINE_16_INCOMING_STATIONS = [
-  Sídliště Řep"y",
+  "Sídliště Řepy",
   "Blatiny",
   "Slánská",
   "Hlušičkova",
