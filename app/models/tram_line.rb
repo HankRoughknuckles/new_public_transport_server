@@ -13,9 +13,11 @@ class TramLine < ApplicationRecord
     tram_line = TramLine.create(name: name, outgoing: outgoing)
     station_names.each_with_index do |station_name, index|
       station = Station.find_or_create_by(name: station_name)
-      if index > 0
-        previous_station = Station.find_or_create_by(name: station_names[index - 1])
-        station.add_neighbor(previous_station, tram_line)
+
+      # make a segment going from this station to the next one
+      if index < station_names.length - 1
+        next_station = Station.find_or_create_by(name: station_names[index + 1])
+        station.add_segment_going_to(next_station, tram_line)
       end
     end
 

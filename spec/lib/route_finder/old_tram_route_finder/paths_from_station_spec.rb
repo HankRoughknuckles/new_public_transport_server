@@ -77,7 +77,7 @@ describe RouteFinder::OldTramRouteFinder::PathsFromStation do
     let(:start_station) { create(:station) }
     let(:destination) { create(:station) }
 
-    before { start_station.add_neighbor(destination, create(:tram_line), 10) }
+    before { start_station.add_two_way_connection_with(destination, create(:tram_line), 10) }
 
     it 'should return a hash of paths' do
       paths_from_station = PathsFromStation.new(start_station)

@@ -15,8 +15,8 @@ describe RouteFinder::OldTramRouteFinder do
     let(:tram_line) { create(:tram_line) }
 
     before do
-      station_a.add_neighbor station_b, tram_line, 10
-      station_b.add_neighbor station_c, tram_line, 10
+      station_a.add_two_way_connection_with station_b, tram_line, 10
+      station_b.add_two_way_connection_with station_c, tram_line, 10
     end
 
     it 'should show the shortest route from A-B as AB' do
@@ -42,9 +42,9 @@ describe RouteFinder::OldTramRouteFinder do
     let(:tram_line) { create(:tram_line) }
 
     before do
-      station_a.add_neighbor station_b, tram_line, 10
-      station_b.add_neighbor station_c, tram_line, 10
-      station_a.add_neighbor station_c, tram_line, 10
+      station_a.add_two_way_connection_with station_b, tram_line, 10
+      station_b.add_two_way_connection_with station_c, tram_line, 10
+      station_a.add_two_way_connection_with station_c, tram_line, 10
     end
 
     it 'should show the shortest route from A-B as AB' do
@@ -70,9 +70,9 @@ describe RouteFinder::OldTramRouteFinder do
     let(:tram_line) { create(:tram_line) }
 
     before do
-      station_a.add_neighbor station_b, tram_line, 10
-      station_b.add_neighbor station_c, tram_line, 10
-      station_a.add_neighbor station_c, tram_line, 30
+      station_a.add_two_way_connection_with station_b, tram_line, 10
+      station_b.add_two_way_connection_with station_c, tram_line, 10
+      station_a.add_two_way_connection_with station_c, tram_line, 30
     end
 
     it 'should show the shortest route from A-B as AB' do
@@ -100,9 +100,9 @@ describe RouteFinder::OldTramRouteFinder do
       let(:line_2) { create(:tram_line) }
 
       before do
-        station_a.add_neighbor station_b, line_1, 10
-        station_b.add_neighbor station_c, line_2, 10 # must transfer to line 2
-        station_a.add_neighbor station_c, line_1, 20 # AC is equidistant to ABC
+        station_a.add_two_way_connection_with station_b, line_1, 10
+        station_b.add_two_way_connection_with station_c, line_2, 10 # must transfer to line 2
+        station_a.add_two_way_connection_with station_c, line_1, 20 # AC is equidistant to ABC
       end
 
       it 'should show the shortest route from A-B as AB' do
